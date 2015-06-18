@@ -2,6 +2,7 @@ package com.example.tabwidget;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +15,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+		Log.d("TAG", "------test");
 		TabHost tabHost = (TabHost) this.findViewById(android.R.id.tabhost);
 		 
         // tabhost如果是以findViewById()这个方法获取的，必须调用setup()方法
