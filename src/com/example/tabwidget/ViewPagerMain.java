@@ -36,8 +36,9 @@ public class ViewPagerMain extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		InitTextView();
-		InitViewPager();
+		
 		InitImageView();
+		InitViewPager();
 	}
 	/**
      * 初始化头标
@@ -105,6 +106,7 @@ public class ViewPagerMain extends Activity {
     public class MyOnPageChangeListener implements OnPageChangeListener {
 
     	Animation animation = null;
+    	Matrix matrix = new Matrix();
     	public MyOnPageChangeListener() {
 		}
     	
@@ -113,69 +115,38 @@ public class ViewPagerMain extends Activity {
         int end=0;
         @Override
         public void onPageSelected(int arg0) {
-           
-            switch (arg0) {
-            case 0:
-            	end=108;
-                if (currIndex == 1) {
-                    animation = new TranslateAnimation(one, 0, 0, 0);
-                } else if (currIndex == 2) {
-                    animation = new TranslateAnimation(two, 0, 0, 0);
-                }
-                break;
-            case 1:
-            	end=468;
-                if (currIndex == 0) {
-                    animation = new TranslateAnimation(offset, one, 0, 0);
-                } else if (currIndex == 2) {
-                    animation = new TranslateAnimation(two, one, 0, 0);
-                }
-                break;
-            case 2:
-            	end=828;
-                if (currIndex == 0) {
-                    animation = new TranslateAnimation(offset, two, 0, 0);
-                } else if (currIndex == 1) {
-                    animation = new TranslateAnimation(one, two, 0, 0);
-                }
-                break;
-            }
-            Log.d("TAG", "------offset:"+offset+"bmpW："+bmpW);
-            currIndex = arg0;
-            //animation.setFillEnabled(true);
-            animation.setFillAfter(true);// True:图片停在动画结束位置
-            animation.setDuration(1000);
-            //animation.setRepeatCount(2); 
-            //animation.setRepeatMode(Animation.REVERSE);
-            cursor.setAnimation(animation);
-            animation.startNow();
-            //cursor.startAnimation(animation);
-            animation.setAnimationListener(new AnimationListener(){  
-                public void onAnimationStart(Animation animation) {  
-                    // TODO Auto-generated method stub  
-                      
-                }  
-  
-                public void onAnimationEnd(Animation animation) {  
-                    // TODO Auto-generated method stub  
-                	//super.onAnimationEnd();  
-                    Matrix matrix = new Matrix();
-                    // matrix.postTranslate(offset, 0);
-                    matrix.postTranslate(end, 0);
-                    cursor.setImageMatrix(matrix);// 设置动画初始位置
-                    Log.d("TAG", "------end:"+end);
-                }  
-  
-                public void onAnimationRepeat(Animation animation) {  
-                    // TODO Auto-generated method stub  
-                      
-                }  
-                  
-            });  
+        	  Animation animation = new TranslateAnimation(one * currIndex, one * arg0, 0, 0);// 显然这个比较简洁，只有一行代码。
+              currIndex = arg0;
+              animation.setFillAfter(true);// True:图片停在动画结束位置
+              animation.setDuration(300);
+              cursor.startAnimation(animation);
         }
 
         @Override
         public void onPageScrolled(int arg0, float arg1, int arg2) {
+        	switch (arg0) {
+            case 0:
+                if (currIndex == 1) {
+                	
+                } else if (currIndex == 2) {
+                	
+                }
+                break;
+            case 1:
+                if (currIndex == 0) {
+                } else if (currIndex == 2) {
+                }
+                break;
+            case 2:
+                if (currIndex == 0) {
+                } else if (currIndex == 1) {
+                }
+                break;
+            }
+            //matrix.postTranslate(arg2, 0);
+           // cursor.setImageMatrix(matrix);// 设置动画初始位置
+        	
+        	Log.d("onPageScrolled", "------arg0:"+arg0+"arg1:"+arg1+"arg2:"+arg2);
         }
 
         @Override
